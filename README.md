@@ -1,238 +1,353 @@
-<div align="center">
-
 # 🛡️ AI Surveillance System
 
-### Real-time, AI-powered video surveillance built entirely in Python
+<div align="center">
 
-A modular framework combining **Object Detection**, **Motion Detection**, **Face Recognition**, and **Alert Management** to monitor video streams and flag suspicious activity automatically.
+### Intelligent Video Surveillance Using Python & Computer Vision
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)](https://opencv.org/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](#-license)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)](#)
+A modular AI-powered surveillance project designed to analyze video streams, detect motion, recognize known faces, identify objects, and manage security events through a centralized alert system.
 
-[Features](#-features) • [Architecture](#-system-architecture) • [Installation](#️-installation) • [Usage](#️-run-the-project) • [Modules](#-core-modules) • [Roadmap](#-future-improvements)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![OpenCV](https://img.shields.io/badge/OpenCV-Computer_Vision-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)](https://opencv.org/)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey?style=for-the-badge)](#installation)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
+**Developed by Vishal Kumar Yadav**
+
+[Features](#-features) • [Architecture](#-system-architecture) • [Installation](#-installation) • [Usage](#-usage) • [Troubleshooting](#-troubleshooting) • [Roadmap](#-future-improvements)
 
 </div>
 
 ---
 
+## 📌 Overview
+
+The AI Surveillance System is a Python-based computer vision project intended to assist with security monitoring by analyzing camera feeds or supported video sources.
+
+The system is organized into independent modules so that detection algorithms, configuration settings, and alert handling can be maintained and improved separately.
+
+### 🎯 Project Objectives
+
+- Reduce dependence on continuous manual video monitoring.
+- Detect movement in monitored environments.
+- Identify objects using a compatible object detection model.
+- Recognize enrolled faces when the recognition module is configured.
+- Record relevant events and support security notifications.
+- Provide a foundation for future intelligent surveillance applications.
+
 ## 🚀 Features
 
-| | |
+| Feature | Description |
 |---|---|
-| 🎥 | **Real-Time Video Surveillance** — continuous monitoring of live or recorded streams |
-| 🎯 | **Object Detection** — identify objects of interest in each frame |
-| 🏃 | **Motion Detection** — flag movement within the monitored scene |
-| 👤 | **Face Recognition** — detect and recognize known individuals |
-| 🚨 | **Alert Management** — centralized handling of detection events |
-| 🔧 | **Modular Architecture** — swap or extend components independently |
-| ⚙️ | **Configurable Detection Settings** — tune sensitivity per module |
-| 📊 | **Detection / Alert Logging** — keep a record of every event |
+| 🎥 Video Monitoring | Process a compatible live camera or video source. |
+| 🏃 Motion Detection | Identify movement within the camera frame. |
+| 🎯 Object Detection | Detect supported objects using a configured model. |
+| 👤 Face Recognition | Compare detected faces with enrolled identities when configured. |
+| 🚨 Alert Management | Centralize handling of detection events. |
+| 📊 Event Logging | Record useful system events and detection results. |
+| ⚙️ Configuration | Customize camera settings and detection parameters. |
+| 🧩 Modular Design | Maintain detection and alert components independently. |
 
----
+**Note:** Actual feature availability depends on the implementation and model files included in your repository. The README does not imply that every feature is already trained or enabled.
 
 ## 🧠 System Architecture
 
 ```mermaid
 flowchart TD
-    A["🎥 Video / Camera Source"] --> B["🧩 Main Controller<br/><code>main.py</code>"]
+    A["Camera / Video Source"] --> B["Main Controller"]
+    B --> C["Motion Detection"]
+    B --> D["Object Detection"]
+    B --> E["Face Recognition"]
 
-    B --> C["🎯 Object Detection<br/><code>object_detector.py</code>"]
-    B --> D["🏃 Motion Detection<br/><code>motion_detection.py</code>"]
-    B --> E["👤 Face Recognition<br/><code>face_recognizer.py</code>"]
-
-    C --> F["🚨 Alert Manager<br/><code>alert_manager.py</code>"]
+    C --> F["Event Processing"]
     D --> F
     E --> F
 
-    F --> G["📊 Alerts / Logs /<br/>Security Response"]
-
-    style A fill:#1f2937,stroke:#38bdf8,color:#fff
-    style B fill:#0f172a,stroke:#38bdf8,color:#fff,stroke-width:2px
-    style C fill:#164e63,stroke:#22d3ee,color:#fff
-    style D fill:#164e63,stroke:#22d3ee,color:#fff
-    style E fill:#164e63,stroke:#22d3ee,color:#fff
-    style F fill:#7c2d12,stroke:#fb923c,color:#fff,stroke-width:2px
-    style G fill:#14532d,stroke:#4ade80,color:#fff
+    F --> G["Alert Manager"]
+    G --> H["Logs / Notifications"]
 ```
 
-> Frames flow from the video source into the main controller, which fans them out to the three detection modules in parallel. Every detection result converges on the Alert Manager, which logs the event and triggers the appropriate response.
+### Processing Workflow
 
----
+1. Capture a frame from the selected video source.
+2. Send frames to the configured detection modules.
+3. Evaluate detection results against configured rules.
+4. Pass relevant events to the alert manager.
+5. Record events and issue configured notifications.
 
-## 📂 Project Structure
-
-```
-AI_Surveillance_System/
-│
-├── config/                  # Configuration files
-├── utils/                   # Utility / helper modules
-│
-├── main.py                  # Main application entry point
-├── object_detector.py       # Object detection module
-├── motion_detection.py      # Motion detection module
-├── face_recognizer.py       # Face detection and recognition
-├── alert_manager.py         # Handles surveillance alerts
-│
-├── requirements.txt         # Python dependencies
-└── .gitignore
-```
-
----
-
-## 🛠️ Technologies Used
+## 🛠️ Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| 🐍 **Python** | Core programming language |
-| 👁️ **Computer Vision** | Video analysis |
-| 🎯 **Object Detection** | Detect objects in frames |
-| 👤 **Face Recognition** | Identify known faces |
-| 🏃 **Motion Detection** | Detect movement |
-| 🚨 **Alert Manager** | Manage security alerts |
+| Python 3.11 | Application logic |
+| OpenCV | Image and video processing |
+| NumPy | Numerical and image-array operations |
+| Face recognition libraries | Optional face identification |
+| Object detection model | Optional object classification and localization |
+| Git & GitHub | Version control and source hosting |
 
----
+The exact packages required depend on the modules implemented in the project.
+
+## 📂 Project Structure
+
+```text
+AI_Surveillance_System/
+│
+├── config/
+│   └── Configuration files
+│
+├── utils/
+│   └── Helper utilities
+│
+├── data/
+│   ├── alerts/
+│   ├── logs/
+│   └── recordings/
+│
+├── models/
+│   └── Model files
+│
+├── faces/
+│   └── Enrolled face data, if configured
+│
+├── main.py
+├── object_detector.py
+├── motion_detection.py
+├── face_recognizer.py
+├── alert_manager.py
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+**Important:** This is a suggested structure. Keep the filenames and folders consistent with the files that actually exist in your repository.
 
 ## ⚙️ Installation
 
-**1. Clone the repository**
+### Prerequisites
+
+- Python 3.11, 64-bit recommended on Windows.
+- Git.
+- Visual Studio Code or another Python editor.
+- A compatible webcam or sample video for testing.
+- Model weights and face data, if required by your implementation.
+
+### 1. Clone the repository
+
 ```bash
 git clone https://github.com/vishalyadav7091/AI_Surveillance_System.git
-```
-
-**2. Open the project**
-```bash
 cd AI_Surveillance_System
 ```
 
-**3. Create a virtual environment**
-```bash
-python -m venv venv
+### 2. Create a virtual environment
+
+**Windows PowerShell:**
+
+```powershell
+py -3.11 -m venv venv
+.\venv\Scripts\Activate.ps1
 ```
 
-**4. Activate the virtual environment**
+If PowerShell blocks activation, use Command Prompt instead:
 
-Windows:
-```bash
-venv\Scripts\activate
+```bat
+venv\Scripts\activate.bat
 ```
 
-Linux / macOS:
+**Linux / macOS:**
+
 ```bash
+python3 -m venv venv
 source venv/bin/activate
 ```
 
-**5. Install dependencies**
+### 3. Upgrade installation tools
+
+```bash
+python -m pip install --upgrade pip setuptools wheel
+```
+
+### 4. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
----
+If installation fails, review the [Troubleshooting](#-troubleshooting) section before changing package versions.
 
-## ▶️ Run the Project
+### 5. Start the application
 
 ```bash
 python main.py
 ```
 
-> ⚠️ Make sure your camera/video source and required configuration are set up correctly before running the application.
+The application will start only if `main.py`, the required modules, dependencies, model files, and configuration are available and correctly set up.
 
----
+## ▶️ Usage
+
+1. Connect a supported camera or prepare a test video.
+2. Review the configuration file and camera index.
+3. Ensure the required model weights and face data are present.
+4. Activate the Python virtual environment.
+5. Run `python main.py`.
+6. Check the console output and configured log directory for events.
+
+### Camera Configuration
+
+For a local Windows webcam, OpenCV commonly uses camera index `0`.
+
+```python
+import cv2
+
+camera = cv2.VideoCapture(0)
+
+if not camera.isOpened():
+    print("Error: Unable to open the camera.")
+else:
+    print("Camera connected successfully.")
+
+camera.release()
+```
+
+Use the camera settings already defined by your project if it has a dedicated camera module.
 
 ## 🔍 Core Modules
 
 ### 🎯 Object Detection
-Analyzes video frames and identifies objects of interest.
 
-**Applications:** Security monitoring · Restricted-area monitoring · Suspicious-object detection · Automated surveillance
+Analyzes video frames to locate supported objects. Detection requires an implemented algorithm and, where applicable, compatible model weights.
+
+Potential applications include restricted-area monitoring and identifying selected objects.
 
 ### 🏃 Motion Detection
-Identifies movement within the monitored scene.
 
-**Useful for:** Intrusion detection · Activity monitoring · Security cameras · Restricted areas
+Compares frames or uses a background-subtraction technique to identify movement.
+
+Potential applications include intrusion alerts and activity monitoring.
 
 ### 👤 Face Recognition
-Detects and recognizes known individuals from video input.
+
+Compares detected faces against enrolled face data when the necessary libraries, face encodings, and recognition logic are configured.
+
+Recognition results should not be treated as definitive proof of identity.
 
 ### 🚨 Alert Management
-Processes detected events and provides a centralized mechanism for handling surveillance alerts.
 
----
+Receives detection events and provides a centralized place to manage logging and configured notifications.
 
-## 🔮 Future Improvements
+Email, messaging, and other external notifications require their corresponding integrations and credentials.
 
-- [ ] Web-based surveillance dashboard
-- [ ] Multiple camera support
-- [ ] Real-time notifications
-- [ ] Email/SMS alert integration
-- [ ] Cloud-based event storage
-- [ ] Database integration
-- [ ] Advanced anomaly detection
-- [ ] Person tracking
-- [ ] Mobile application
-- [ ] Docker deployment
-- [ ] AI-based suspicious activity detection
+## 🧰 Troubleshooting
 
----
+### Problem 1: `pip install -r requirements.txt` fails
+
+Upgrade pip and retry:
+
+```bash
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
+Check that your active interpreter is Python 3.11:
+
+```bash
+python --version
+python -m pip --version
+```
+
+### Problem 2: `Failed building wheel for dlib`
+
+Some Windows setups cannot build `dlib` without compatible build tools.
+
+- Confirm that Python and the installed packages support your Python version and architecture.
+- Review the installation instructions for the face-recognition library.
+- Use a compatible, trusted prebuilt wheel if available for your exact environment.
+- Do not download arbitrary DLLs or wheels from untrusted websites.
+
+### Problem 3: `ModuleNotFoundError`
+
+Activate your virtual environment and install the missing dependency:
+
+```bash
+python -m pip install package-name
+```
+
+Replace `package-name` with the actual missing package. If the import fails despite installation, verify that VS Code is using the correct Python interpreter.
+
+### Problem 4: Camera is not opening
+
+- Close other applications using the camera.
+- Check Windows camera permissions.
+- Verify the camera index.
+- Test the camera independently using the OpenCV example above.
+
+### Problem 5: `git push` fails
+
+Check the configured remote and current branch:
+
+```bash
+git remote -v
+git branch --show-current
+git status
+```
+
+For HTTPS authentication, use Git Credential Manager or a supported personal access token workflow.
 
 ## 🔐 Security & Privacy
 
-This project is intended for **authorized security and monitoring purposes only**.
+This project is intended for authorized security monitoring.
 
-When deploying a surveillance system:
+- Obtain appropriate consent where required.
+- Restrict access to camera feeds, logs, and face data.
+- Never commit API keys, email passwords, or `.env` files.
+- Avoid uploading personal face images or recorded footage to a public repository.
+- Apply suitable retention and deletion policies.
+- Follow applicable privacy and data-protection laws.
 
-- ✅ Obtain appropriate consent where required
-- ✅ Protect stored video and recognition data
-- ✅ Avoid unnecessary collection of personal information
-- ✅ Secure access to cameras and system logs
-- ✅ Follow applicable privacy and data-protection laws
+## 🔮 Future Improvements
 
----
+- [ ] Web-based monitoring dashboard
+- [ ] Multiple camera support
+- [ ] Configurable email and messaging alerts
+- [ ] Database-backed event management
+- [ ] Person tracking
+- [ ] Restricted-area detection
+- [ ] Improved anomaly detection
+- [ ] Role-based access control
+- [ ] Secure remote monitoring
+- [ ] Docker deployment
+- [ ] Automated testing and CI
 
-## 📌 Use Cases
+These items represent potential improvements, not necessarily implemented features.
 
-<table>
-<tr>
-<td>🏠 Smart Home Security</td>
-<td>🏢 Office Surveillance</td>
-<td>🏫 Campus Monitoring</td>
-</tr>
-<tr>
-<td>🏭 Industrial Security</td>
-<td>🚪 Restricted Area Monitoring</td>
-<td>🛒 Store Security</td>
-</tr>
-<tr>
-<td>🏥 Facility Monitoring</td>
-<td></td>
-<td></td>
-</tr>
-</table>
+## 🤝 Contributing
 
----
+Contributions and suggestions are welcome.
 
-## 📊 Project Goals
+1. Fork the repository.
+2. Create a feature branch.
+3. Implement and test your changes.
+4. Submit a pull request describing the changes.
 
-The main goal of this project is to develop an intelligent surveillance system that reduces dependence on continuous manual monitoring by automatically analyzing video streams and identifying potentially important events.
+## 📜 License
 
----
+This project is intended to use the MIT License if the repository includes a corresponding `LICENSE` file. Add the actual license text before presenting the project as MIT-licensed.
 
 ## 👨‍💻 Author
 
 **Vishal Kumar Yadav**
+
 AI/ML Student | Python Developer | Computer Vision Enthusiast
 
-🔗 GitHub: [@vishalyadav7091](https://github.com/vishalyadav7091)
+- GitHub: [@vishalyadav7091](https://github.com/vishalyadav7091)
 
 ---
 
 <div align="center">
 
-## ⭐ Support
+### ⭐ Support the Project
 
-If you find this project useful, consider giving it a ⭐ on GitHub!
+If you find this project useful, consider starring the repository and sharing suggestions for improvement.
 
-**Made with ❤️ using Python & AI**
+**Built with ❤️ using Python and Computer Vision**
 
 </div>
